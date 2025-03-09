@@ -1,7 +1,7 @@
 import chess
 from board_calculus import evaluate
 
-MATE_SCORE = 10000  
+MATE_SCORE = 10001  
 
 def minimax(depth, board, alpha, beta, is_maximizing):
     if depth <= 0 or board.is_game_over():
