@@ -129,7 +129,7 @@ def main():
                 white_button = pygame.Rect(50, board_size // 2 - 25, 200, 50)
                 black_button = pygame.Rect(board_size - 250, board_size // 2 - 25, 200, 50)
                 if white_button.collidepoint(pos):
-                    player_is_white = True
+                    player_is_white = False
                     choosing_color = False
                 elif black_button.collidepoint(pos):
                     player_is_white = False
@@ -137,8 +137,8 @@ def main():
                     
         screen.fill((200, 200, 200))
         draw_text(screen, "Выберите цвет", (board_size // 2 - 150, board_size // 2 - 100), 36)
-        pygame.draw.rect(screen, (255, 255, 255), (50, board_size // 2 - 25, 200, 50))
-        draw_text(screen, "Белые", (50 + 50, board_size // 2 - 15), 36)
+        pygame.draw.rect(screen, (100, 100, 100), (50, board_size // 2 - 25, 200, 50))
+        draw_text(screen, "Чёрные", (50 + 50, board_size // 2 - 15), 36)
         pygame.draw.rect(screen, (100, 100, 100), (board_size - 250, board_size // 2 - 25, 200, 50))
         draw_text(screen, "Чёрные", (board_size - 250 + 30, board_size // 2 - 15), 36)
         pygame.display.flip()
