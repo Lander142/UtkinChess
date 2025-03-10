@@ -12,7 +12,7 @@ def minimax(depth, board, alpha, beta, is_maximizing):
                 return 0
         return evaluate(board)
     
-    repetition_penalty = -50  
+    repetition_penalty = -500
     extra_penalty = repetition_penalty if board.can_claim_threefold_repetition() else 0
 
     if is_maximizing:

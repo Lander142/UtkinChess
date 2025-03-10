@@ -1,6 +1,7 @@
 import pygame, chess
 import sys
 from engine2_0 import minimax, _determine_best_move
+
 def square_to_pixel(square, player_is_white, board_size):
     square_size = board_size // 8
     file = chess.square_file(square)
@@ -66,6 +67,47 @@ def draw_text(screen, text, pos, font_size=32, color=(0, 0, 0)):
     text_surface = font.render(text, True, color)
     screen.blit(text_surface, pos)
 
+def get_promotion_choice(screen, board_size, player_is_white):
+    promotion_pieces = [chess.QUEEN, chess.ROOK, chess.BISHOP, chess.KNIGHT]
+    if player_is_white:
+        icons = {chess.QUEEN: '♕', chess.ROOK: '♖', chess.BISHOP: '♗', chess.KNIGHT: '♘'}
+    else:
+        icons = {chess.QUEEN: '♛', chess.ROOK: '♜', chess.BISHOP: '♝', chess.KNIGHT: '♞'}
+    
+    button_width = 80
+    button_height = 80
+    total_width = len(promotion_pieces) * button_width + (len(promotion_pieces) - 1) * 10
+    start_x = (board_size - total_width) // 2
+    start_y = (board_size - button_height) // 2
+    promotion_buttons = []
+    for i, piece in enumerate(promotion_pieces):
+        rect = pygame.Rect(start_x + i * (button_width + 10), start_y, button_width, button_height)
+        promotion_buttons.append((rect, piece))
+    
+    promotion_font = pygame.font.SysFont("DejaVu Sans", 60)
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                for rect, piece in promotion_buttons:
+                    if rect.collidepoint(pos):
+                        return piece
+        overlay = pygame.Surface((board_size, board_size))
+        overlay.set_alpha(200)
+        overlay.fill((50, 50, 50))
+        screen.blit(overlay, (0, 0))
+        for rect, piece in promotion_buttons:
+            pygame.draw.rect(screen, (200, 200, 200), rect)
+            text = promotion_font.render(icons[piece], True, (0, 0, 0))
+            text_rect = text.get_rect(center=rect.center)
+            screen.blit(text, text_rect)
+        pygame.display.flip()
+
+
 def main():
     pygame.init()
     board_size = 640
@@ -125,6 +167,14 @@ def main():
                             selected_square = square
                     else:
                         move = chess.Move(selected_square, square)
+                        promotion_needed = False
+                        moving_piece = board.piece_at(selected_square)
+                        if moving_piece is not None and moving_piece.piece_type == chess.PAWN:
+                            if (player_is_white and chess.square_rank(square) == 7) or (not player_is_white and chess.square_rank(square) == 0):
+                                promotion_needed = True
+                        if promotion_needed:
+                            promo_piece = get_promotion_choice(screen, board_size, player_is_white)
+                            move = chess.Move(selected_square, square, promotion=promo_piece)
                         if move in board.legal_moves:
                             board.push(move)
                             selected_square = None
@@ -147,4 +197,5 @@ def main():
         pygame.display.flip()
         clock.tick(30)
     pygame.quit()
+
 main()
