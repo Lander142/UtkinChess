@@ -8,6 +8,7 @@ TABLE = [
     0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,
 ]
+PAWN_TABLE = TABLE
 KNIGHTS_TABLE = TABLE
 BISHOPS_TABLE = TABLE
 ROOKS_TABLE = TABLE

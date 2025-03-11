@@ -56,4 +56,5 @@ def evaluate(board):
     center_control_value = 20 * (center_control_white - center_control_black)  
 
     evaluation = material + positional + mobility_value + center_control_value
+    print(f'material: {material}, positional: {positional}, mobility_value: {mobility_value}, center_control_value: {center_control_value}')
     return evaluation
