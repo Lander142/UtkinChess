@@ -6,6 +6,28 @@ def mobility_for_color(board, color):
     board_copy.turn = color
     return sum(1 for _ in board_copy.legal_moves)
 
+PIECE_VALUES = {
+    chess.PAWN: 100,
+    chess.KNIGHT: 300,
+    chess.BISHOP: 400,
+    chess.ROOK: 500,
+    chess.QUEEN: 900,
+    chess.KING: 1100
+}
+
+def piece_safety_evaluation(board, color):
+    safety_score = 0
+    opponent = not color
+    for piece_type in [chess.PAWN, chess.KNIGHT, chess.BISHOP, chess.ROOK, chess.QUEEN]:
+        for square in board.pieces(piece_type, color):
+            attackers = board.attackers(opponent, square)
+            defenders = board.attackers(color, square)
+        
+            if attackers:
+                if len(defenders) < len(attackers):
+                    penalty = PIECE_VALUES[piece_type] * 0.5
+                    safety_score -= penalty
+    return safety_score
 def evaluate(board):
     wp = len(board.pieces(chess.PAWN, chess.WHITE))
     bp = len(board.pieces(chess.PAWN, chess.BLACK))
@@ -46,7 +68,7 @@ def evaluate(board):
 
     mobility_white = mobility_for_color(board, chess.WHITE)
     mobility_black = mobility_for_color(board, chess.BLACK)
-    mobility_value = 10 * (mobility_white - mobility_black)  
+    mobility_value = 5 * (mobility_white - mobility_black)  
 
     center_squares = [chess.D4, chess.D5, chess.E4, chess.E5]
     center_control_white = sum(1 for square in center_squares 
@@ -55,6 +77,10 @@ def evaluate(board):
                                if board.piece_at(square) and board.piece_at(square).color == chess.BLACK)
     center_control_value = 20 * (center_control_white - center_control_black)  
 
-    evaluation = material + positional + mobility_value + center_control_value
-    print(f'material: {material}, positional: {positional}, mobility_value: {mobility_value}, center_control_value: {center_control_value}')
+    safety_white = piece_safety_evaluation(board, chess.WHITE)
+    safety_black = piece_safety_evaluation(board, chess.BLACK)
+    safety_value = safety_white - safety_black
+
+    evaluation = material + positional + mobility_value + center_control_value + safety_value
+    print(f'material: {material}, positional: {positional}, mobility_value: {mobility_value}, center_control_value: {center_control_value}, safety_value: {safety_value}')
     return evaluation
