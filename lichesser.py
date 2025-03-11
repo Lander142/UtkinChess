@@ -6,7 +6,7 @@ import chess.pgn
 import requests
 import json
 import time
-TOKEN = "Token"
+TOKEN = "TOKEN"
 
 session = berserk.TokenSession(TOKEN)
 client = berserk.Client(session=session)
@@ -31,6 +31,7 @@ def make_move(game_id, move):
 def play_game(game_id):
     board = chess.Board()
     while True:
+        try:
             for event in stream_game(game_id):
                 if 'state' in event:
                     moves_str = event['state'].get('moves', "")
@@ -39,7 +40,7 @@ def play_game(game_id):
                         board.push_uci(move)
                     if board.is_game_over():
                         print("Игра закончена!")
-                        return  
+                        return
                     if board.turn == chess.WHITE:  
                         best_move = _determine_best_move(board, True)
                     else:
@@ -47,6 +48,10 @@ def play_game(game_id):
                     if best_move:
                         print(f"Сделан ход: {best_move.uci()}")
                         make_move(game_id, best_move.uci())
+        except Exception as e:
+            print("Ошибка при обработке событий:", e)
+            time.sleep(5)
+            play_game(game_id)
 
 def main():
     for event in stream_events():
