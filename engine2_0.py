@@ -39,7 +39,7 @@ def minimax(depth, board, alpha, beta, is_maximizing):
         return best_value
 
 
-def _determine_best_move(board, is_white, depth=4):
+def determine_best_move(board, is_white, depth=3):
     best_move_value = -100000 if is_white else 100000
     best_move_final = None
     for move in board.legal_moves:

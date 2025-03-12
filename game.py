@@ -1,6 +1,6 @@
 import pygame, chess
 import sys
-from engine2_0 import minimax, _determine_best_move
+from engine2_0 import minimax, determine_best_move
 
 def square_to_pixel(square, player_is_white, board_size):
     square_size = board_size // 8
@@ -145,7 +145,7 @@ def main():
         clock.tick(30)
     
     if not player_is_white:
-        engine_move = _determine_best_move(board, True)
+        engine_move = determine_best_move(board, True)
         if engine_move is not None:
             board.push(engine_move)
     
@@ -181,7 +181,7 @@ def main():
                             if board.is_game_over():
                                 message = "Игра окончена"
                             else:
-                                engine_move = _determine_best_move(board, not player_is_white)
+                                engine_move = determine_best_move(board, not player_is_white)
                                 if engine_move is not None:
                                     board.push(engine_move)
                                     if board.is_game_over():

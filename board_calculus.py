@@ -46,23 +46,23 @@ def evaluate(board):
                 500 * (wr - br) +
                 900 * (wq - bq))
     
-    pawn_sum = sum(PAWN_TABLE[i] for i in board.pieces(chess.PAWN, chess.WHITE))
-    pawn_sum += sum(-PAWN_TABLE[chess.square_mirror(i)] for i in board.pieces(chess.PAWN, chess.BLACK))
+    pawn_sum = sum(pawn_table[i] for i in board.pieces(chess.PAWN, chess.WHITE))
+    pawn_sum += sum(-pawn_table[chess.square_mirror(i)] for i in board.pieces(chess.PAWN, chess.BLACK))
     
-    knight_sum = sum(KNIGHTS_TABLE[i] for i in board.pieces(chess.KNIGHT, chess.WHITE))
-    knight_sum += sum(-KNIGHTS_TABLE[chess.square_mirror(i)] for i in board.pieces(chess.KNIGHT, chess.BLACK))
+    knight_sum = sum(knights_table[i] for i in board.pieces(chess.KNIGHT, chess.WHITE))
+    knight_sum += sum(-knights_table[chess.square_mirror(i)] for i in board.pieces(chess.KNIGHT, chess.BLACK))
     
-    bishop_sum = sum(BISHOPS_TABLE[i] for i in board.pieces(chess.BISHOP, chess.WHITE))
-    bishop_sum += sum(-BISHOPS_TABLE[chess.square_mirror(i)] for i in board.pieces(chess.BISHOP, chess.BLACK))
+    bishop_sum = sum(bishops_table[i] for i in board.pieces(chess.BISHOP, chess.WHITE))
+    bishop_sum += sum(-bishops_table[chess.square_mirror(i)] for i in board.pieces(chess.BISHOP, chess.BLACK))
     
-    rook_sum = sum(ROOKS_TABLE[i] for i in board.pieces(chess.ROOK, chess.WHITE))
-    rook_sum += sum(-ROOKS_TABLE[chess.square_mirror(i)] for i in board.pieces(chess.ROOK, chess.BLACK))
+    rook_sum = sum(rooks_table[i] for i in board.pieces(chess.ROOK, chess.WHITE))
+    rook_sum += sum(-rooks_table[chess.square_mirror(i)] for i in board.pieces(chess.ROOK, chess.BLACK))
     
-    queens_sum = sum(QUEENS_TABLE[i] for i in board.pieces(chess.QUEEN, chess.WHITE))
-    queens_sum += sum(-QUEENS_TABLE[chess.square_mirror(i)] for i in board.pieces(chess.QUEEN, chess.BLACK))
+    queens_sum = sum(queens_table[i] for i in board.pieces(chess.QUEEN, chess.WHITE))
+    queens_sum += sum(-queens_table[chess.square_mirror(i)] for i in board.pieces(chess.QUEEN, chess.BLACK))
     
-    kings_sum = sum(KINGS_TABLE[i] for i in board.pieces(chess.KING, chess.WHITE))
-    kings_sum += sum(-KINGS_TABLE[chess.square_mirror(i)] for i in board.pieces(chess.KING, chess.BLACK))
+    kings_sum = sum(kings_table[i] for i in board.pieces(chess.KING, chess.WHITE))
+    kings_sum += sum(-kings_table[chess.square_mirror(i)] for i in board.pieces(chess.KING, chess.BLACK))
     
     positional = pawn_sum + knight_sum + bishop_sum + rook_sum + queens_sum + kings_sum
 
