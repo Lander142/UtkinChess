@@ -1,5 +1,5 @@
 import berserk
-from engine2_0 import minimax, _determine_best_move
+from engine2_0 import minimax, determine_best_move
 import chess
 import chess.engine
 import chess.pgn
@@ -42,9 +42,9 @@ def play_game(game_id):
                         print("Игра закончена!")
                         return
                     if board.turn == chess.WHITE:  
-                        best_move = _determine_best_move(board, True)
+                        best_move = determine_best_move(board, True)
                     else:
-                        best_move = _determine_best_move(board, False)
+                        best_move = determine_best_move(board, False)
                     if best_move:
                         print(f"Сделан ход: {best_move.uci()}")
                         make_move(game_id, best_move.uci())

@@ -1,5 +1,5 @@
 import chess
-from table_hard import *
+from table_values import *
 
 def mobility_for_color(board, color):
     board_copy = board.copy()
