@@ -33,7 +33,7 @@ def draw_board(screen, board, player_is_white, selected_square, board_size):
     light_color = (240, 217, 181)   
     dark_color = (181, 136, 99)    
     
-    piece_font = pygame.font.Font("UtkinChess/DejaVuSans.ttf", square_size - 10)
+    piece_font = pygame.font.Font("DejaVuSans.ttf", square_size - 10)
     piece_symbols = {
         'P': '♙', 'N': '♘', 'B': '♗', 'R': '♖', 'Q': '♕', 'K': '♔',
         'p': '♟', 'n': '♞', 'b': '♝', 'r': '♜', 'q': '♛', 'k': '♚'
@@ -87,7 +87,7 @@ def get_promotion_choice(screen, board_size, player_is_white):
         rect = pygame.Rect(start_x + i * (button_width + 10), start_y, button_width, button_height)
         promotion_buttons.append((rect, piece))
     
-    promotion_font = pygame.font.SysFont("UtkinChess/DejaVuSans.ttf", 60)
+    promotion_font = pygame.font.SysFont("DejaVuSans.ttf", 60)
     
     while True:
         for event in pygame.event.get():
